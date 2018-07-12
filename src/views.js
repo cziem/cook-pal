@@ -71,7 +71,7 @@ const initEditPage = recipeId => {
   const dateEl = document.querySelector('#last_edited')
 
   const recipes = getRecipes()
-  const recipe = recipes.find(recipe => recipe.id === recipedId)
+  const recipe = recipes.find(recipe => recipe.id === recipeId)
 
   if (!recipe) location.assign('/index.html')
 
