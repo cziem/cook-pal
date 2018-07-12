@@ -7,7 +7,37 @@
   <title>Cook Pal</title>
 </head>
 <body>
-  <h1>jsDev <kbd>Boilerplate</kbd></h1>
+  <!-- Header -->
+  <header class="header">
+    <div class="container logo">
+      <h2 class="header__title">Cook Pal</h2>
+      <h4 class="header__subtitle">buddy with d' sauce</h4>
+    </div>
+    <!-- navigations -->
+    <nav class="nav">
+      <ul>
+        <a href="">
+          <li>Recipe</li>
+        </a>
+        <a href="">
+          <li>Video</li>
+        </a>
+        <a href="">
+          <li>Help</li>
+        </a>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- search & actions -->
+  <div class="actions">
+    <input type="text" placeholder="search" id="search" class="input">
+  </div>
+
+  <!-- Add Recipe -->
+  <div class="add__recipe">
+    <button class="btn btn-recipe" id="addRecipe">Add Recipe</button>
+  </div>
 
   <script src="/scripts/home-bundle.js"></script>
 </body>
