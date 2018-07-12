@@ -31,7 +31,16 @@
 
   <!-- search & actions -->
   <div class="actions">
-    <input type="text" placeholder="search" id="search" class="input">
+    <div class="actions__container">
+      <input type="text" placeholder="search" id="search" class="input">
+
+      <!-- create dropdown -->
+      <select id="filter_by" class="dropdown">
+        <option value="byEdited">Sort by last edited</option>
+        <option value="byCreated">Sort by recently created</option>
+        <option value="byAlphabet">Sort alphabetically</option>
+      </select>
+    </div>
   </div>
 
   <!-- Add Recipe -->
