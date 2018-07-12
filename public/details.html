@@ -7,8 +7,28 @@
   <title>Cook Pal Details</title>
 </head>
 <body>
+  <!-- actions -->
+  <div class="actions">
+    <div class="actions__container actions__container--spaced">
+      <a href="index.html" class="">Home</a>
+      <span id="last_edited" class="last_edited"></span>
+    </div>
+  </div>
 
-  <a href="index.html">Home</a>
+  <div class="container">
+    <div class="edit__section">
+      <!-- set up the title -->
+      <input type="text" id="recipeTitle" class="input recipe__title" placeholder="Enter recipe title">
+      <textarea placeholder="enter note" id="note_body" class="body-input"></textarea>
+    </div>
+
+    <!-- setup delete recipe -->
+    <div class="delete__recipe">
+      <h3>Danger Zone</h3>
+      <button id="deleteRecipe" class="btn btn-danger">Delete Recipe</button>
+    </div>
+
+  </div>
 
   <script src="/scripts/details-bundle.js"></script>
 </body>
