@@ -1,6 +1,7 @@
 import moment from "moment";
 import { getFilters } from "./filters";
 import { sortRecipes, getRecipes } from "./recipes";
+import { generateIngredientSummary } from './ingredients'
 
 // Generate DOM structure for the recipe
 const generateRecipeDOM = ({ id, title, updatedAt }) => {
@@ -12,13 +13,13 @@ const generateRecipeDOM = ({ id, title, updatedAt }) => {
   const timestampEl = document.createElement("span");
 
   // add classes to them
-  recipeEl.classList.add('list-item')
+  recipeEl.classList.add("list-item");
   titleEl.classList.add("list-item__title");
   labelEl.classList.add("list-item__subtitle");
   timestampEl.classList.add("list-item__spaced");
 
   // setup the link
-  recipeEl.setAttribute('href', `/details.html#${id}`)
+  recipeEl.setAttribute("href", `/details.html#${id}`);
 
   // setup the title of the recipe
   title.length > 0
@@ -27,7 +28,7 @@ const generateRecipeDOM = ({ id, title, updatedAt }) => {
 
   // setup timestampEl textConten
   timestampEl.textContent = generateLastEdited(updatedAt);
-  // statusEl.textContent = generateIngredientSummary(absentIngredients);
+  statusEl.textContent = generateIngredientSummary();
 
   // append elements in order
   labelEl.appendChild(statusEl);
@@ -72,29 +73,22 @@ const generateLastEdited = updatedAt =>
 const initEditPage = recipeId => {
   const titleEl = document.querySelector("#recipeTitle");
   const bodyEl = document.querySelector("#recipe_body");
-  const dateEl = document.querySelector('#last_edited')
+  const dateEl = document.querySelector("#last_edited");
 
-  const recipes = getRecipes()
-  const recipe = recipes.find(recipe => recipe.id === recipeId)
+  const recipes = getRecipes();
+  const recipe = recipes.find(recipe => recipe.id === recipeId);
 
-  if (!recipe) location.assign('/index.html')
+  if (!recipe) location.assign("/index.html");
 
   // set the input elements
-  titleEl.value = recipe.title
-  bodyEl.value = recipe.body
-  dateEl.textContent = generateLastEdited(recipe.updatedAt)
-}
-
-// Generate DOM structure for ingredients
-const generateIngredientDOM = ingredient => {
-  // do something
+  titleEl.value = recipe.title;
+  bodyEl.value = recipe.body;
+  dateEl.textContent = generateLastEdited(recipe.updatedAt);
 };
 
-
-// Generate ingredient summary
-// const generateIngredientSummary = absentIngredients => {
-//   const ingredientLength = absentIngredients.length;
-//   // if (ingredientLength > )
-// };
-
-export { generateRecipeDOM, generateLastEdited, renderRecipes, initEditPage };
+export {
+  generateRecipeDOM,
+  generateLastEdited,
+  renderRecipes,
+  initEditPage,
+};
