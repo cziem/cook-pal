@@ -3,7 +3,7 @@ import { getFilters } from "./filters";
 import { sortRecipes, getRecipes } from "./recipes";
 
 // Generate DOM structure for the recipe
-const generateRecipeDOM = ({ title, updatedAt }) => {
+const generateRecipeDOM = ({ id, title, updatedAt }) => {
   // create the elements
   const recipeEl = document.createElement("a");
   const titleEl = document.createElement("p");
@@ -12,9 +12,13 @@ const generateRecipeDOM = ({ title, updatedAt }) => {
   const timestampEl = document.createElement("span");
 
   // add classes to them
+  recipeEl.classList.add('list-item')
   titleEl.classList.add("list-item__title");
   labelEl.classList.add("list-item__subtitle");
   timestampEl.classList.add("list-item__spaced");
+
+  // setup the link
+  recipeEl.setAttribute('href', `/details.html#${id}`)
 
   // setup the title of the recipe
   title.length > 0
