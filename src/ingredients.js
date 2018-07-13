@@ -22,15 +22,31 @@ const saveIngredients = () => {
 const getIngredient = () => ingredients;
 
 // create ingredient
-const createIngredient = ingredient => {
-  if (ingredient.length > 0) {
-    ingredients.push({
-      text: ingredient,
-      hasIngredient: false,
-      id: uuidv4()
-    });
+const createIngredient = newIngredient => {
+  const filteredIngredients = ingredients.findIndex(
+    ingredient => ingredient.text === newIngredient
+  );
 
-    saveIngredients();
+  if (filteredIngredients > -1) {
+    const errorEl = document.querySelector('#errorMsg')
+    const duplicateMsgEl = document.createElement('p')
+    duplicateMsgEl.classList.add('error-message')
+    duplicateMsgEl.innerHTML = `${newIngredient} already exists`
+    errorEl.innerHTML = ''
+    errorEl.appendChild(duplicateMsgEl)
+  }
+
+  // Dont create duplicate ingredients
+  if (filteredIngredients === -1) {
+    if (newIngredient.length > 0) {
+      ingredients.push({
+        text: newIngredient,
+        hasIngredient: false,
+        id: uuidv4()
+      });
+
+      saveIngredients();
+    }
   }
 };
 
