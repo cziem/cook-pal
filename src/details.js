@@ -2,14 +2,13 @@ import { removeRecipe, updateRecipe } from "./recipes";
 import { initEditPage, generateLastEdited } from "./views";
 import { createIngredient, loadIngredients, renderIngredients } from './ingredients'
 
-renderIngredients()
-
 const recipeId = location.hash.substring(1);
 const titleEl = document.querySelector("#recipeTitle");
 const bodyEl = document.querySelector("#recipe_body");
 const removeEl = document.querySelector("#deleteRecipe");
 const dateEl = document.querySelector("#last_edited");
 
+renderIngredients()
 initEditPage(recipeId);
 
 titleEl.addEventListener("input", e => {
