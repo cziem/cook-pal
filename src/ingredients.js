@@ -117,16 +117,17 @@ const toggleIngredient = id => {
 
 // Generate ingredient summary
 const generateIngredientSummary = () => {
-  const absentIngredients = ingredients.filter(
-    ingredient => !ingredient.hasIngredient
-  );
   const totalLength = ingredients.length;
+  const absentIngredients = ingredients.filter(
+    ingredient => ingredient.hasIngredient
+  );
+  const absentIngredientsLength = absentIngredients.length;
 
-  if (totalLength === absentIngredients) {
+  if (totalLength === absentIngredientsLength) {
     return "You have all the ingredients";
-  } else if (absentIngredients > 0) {
+  } else if (absentIngredientsLength > 0) {
     return "You have some of the ingredients";
-  } else if (absentIngredients === 0) {
+  } else if (absentIngredientsLength === 0) {
     return "You have none of the ingredients";
   }
 };
