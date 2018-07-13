@@ -42,7 +42,7 @@ const renderIngredients = () => {
   ingredientEl.innerHTML = "";
 
   // check for content in the ingredients array
-  if (ingredients.length > 0) {
+  if (ingredientItems.length > 0) {
     ingredientItems.forEach(ingredientItem => {
       ingredientEl.appendChild(generateIngredientDOM(ingredientItem));
     });
@@ -120,18 +120,18 @@ const generateIngredientSummary = () => {
   const absentIngredients = ingredients.filter(
     ingredient => !ingredient.hasIngredient
   );
-  const totalLength = ingredients.length
+  const totalLength = ingredients.length;
 
   if (totalLength === absentIngredients) {
-    return 'You have all the ingredients'
+    return "You have all the ingredients";
   } else if (absentIngredients > 0) {
-    return 'You have some of the ingredients'
+    return "You have some of the ingredients";
   } else if (absentIngredients === 0) {
-    return 'You have none of the ingredients'
+    return "You have none of the ingredients";
   }
 };
 
-// ingredients = loadIngredients()
+ingredients = loadIngredients();
 
 export {
   createIngredient,
