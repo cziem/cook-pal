@@ -1,59 +1,10 @@
-import uuidv4 from "uuid/v4";
-
-let ingredients = [];
-
-// get saved ingredients
-const loadIngredients = () => {
-  const ingredientJSON = localStorage.getItem("ingredients");
-
-  try {
-    return ingredientJSON ? JSON.parse(ingredientJSON) : [];
-  } catch (e) {
-    return [];
-  }
-};
-
-// save ingredient
-const saveIngredients = () => {
-  localStorage.setItem("ingredients", JSON.stringify(ingredients));
-};
-
-// expose the ingredient from the module
-const getIngredient = () => ingredients;
-
-// create ingredient
-const createIngredient = newIngredient => {
-  const filteredIngredients = ingredients.findIndex(
-    ingredient => ingredient.text === newIngredient
-  );
-
-  if (filteredIngredients > -1) {
-    const errorEl = document.querySelector('#errorMsg')
-    const duplicateMsgEl = document.createElement('p')
-    duplicateMsgEl.classList.add('error-message')
-    duplicateMsgEl.innerHTML = `${newIngredient} already exists`
-    errorEl.innerHTML = ''
-    errorEl.appendChild(duplicateMsgEl)
-  }
-
-  // Dont create duplicate ingredients
-  if (filteredIngredients === -1) {
-    if (newIngredient.length > 0) {
-      ingredients.push({
-        text: newIngredient,
-        hasIngredient: false,
-        id: uuidv4()
-      });
-
-      saveIngredients();
-    }
-  }
-};
+import { getRecipes, saveRecipe } from "./recipes";
 
 // renderIngredients
 const renderIngredients = () => {
   const ingredientEl = document.querySelector("#ingredients");
-  const ingredientItems = getIngredient();
+  const [ingredientObject] = getRecipes()
+  const ingredientItems = ingredientObject.ingredients
 
   ingredientEl.innerHTML = "";
 
@@ -70,7 +21,7 @@ const renderIngredients = () => {
   }
 };
 
-// Generate DOM structure for ingredients
+// // Generate DOM structure for ingredients
 const generateIngredientDOM = ingredient => {
   const labelEl = document.createElement("label");
   const containerEl = document.createElement("div");
@@ -85,7 +36,7 @@ const generateIngredientDOM = ingredient => {
   removeButton.classList.add("button", "button--text");
 
   // setup contents and state
-  textEl.textContent = ingredient.text;
+  textEl.textContent = ingredient;
   removeButton.textContent = "remove";
   checkbox.checked = ingredient.hasIngredient;
 
@@ -101,58 +52,58 @@ const generateIngredientDOM = ingredient => {
     renderIngredients();
   });
 
-  removeButton.addEventListener("click", () => {
-    removeIngredient(ingredient.id);
+  removeButton.addEventListener("click", (e) => {
+    const item = e.target.parentElement.children[0].textContent
+    removeIngredient(item);
     renderIngredients();
   });
 
   return labelEl;
 };
 
-// setup removeIngredient
-const removeIngredient = id => {
-  const ingredientIndex = ingredients.findIndex(
-    ingredient => ingredient.id === id
+// // setup removeIngredient
+const removeIngredient = item => {
+  const [ingredientObject] = getRecipes()
+  const ingredientRecipe = ingredientObject.ingredients
+
+  const ingredientIndex = ingredientRecipe.findIndex(
+    ingredient => ingredient.includes(item)
   );
 
   if (ingredientIndex > -1) {
-    ingredients.splice(ingredientIndex, 1);
-    saveIngredients();
+    ingredientRecipe.splice(ingredientIndex, 1);
+    saveRecipe()
   }
 };
 
-// toggleIngredient
+// // toggleIngredient
 const toggleIngredient = id => {
-  const ingredient = ingredients.find(ingredient => ingredient.id === id);
+  const [ingredientObject] = getRecipes()
+  const ingredientRecipe = ingredientObject.ingredients
+  const ingredient = ingredientRecipe.find(ingredient => ingredient.id === id);
 
   if (ingredient) {
     ingredient.hasIngredient = !ingredient.hasIngredient;
-    saveIngredients();
+    saveRecipe()
   }
 };
 
-// Generate ingredient summary
-const generateIngredientSummary = () => {
-  const totalLength = ingredients.length;
-  const absentIngredients = ingredients.filter(
-    ingredient => ingredient.hasIngredient
-  );
-  const absentIngredientsLength = absentIngredients.length;
+// // Generate ingredient summary
+// const generateIngredientSummary = () => {
+//   const totalLength = ingredients.length;
+//   const absentIngredients = ingredients.filter(
+//     ingredient => ingredient.hasIngredient
+//   );
+//   const absentIngredientsLength = absentIngredients.length;
 
-  if (totalLength === absentIngredientsLength) {
-    return "You have all the ingredients";
-  } else if (absentIngredientsLength > 0) {
-    return "You have some of the ingredients";
-  } else if (absentIngredientsLength === 0) {
-    return "You have none of the ingredients";
-  }
-};
+//   if (totalLength === absentIngredientsLength) {
+//     return "You have all the ingredients";
+//   } else if (absentIngredientsLength > 0) {
+//     return "You have some of the ingredients";
+//   } else if (absentIngredientsLength === 0) {
+//     return "You have none of the ingredients";
+//   }
+// };
 
-ingredients = loadIngredients();
 
-export {
-  createIngredient,
-  loadIngredients,
-  renderIngredients,
-  generateIngredientSummary
-};
+export { renderIngredients }

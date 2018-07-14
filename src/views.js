@@ -28,8 +28,7 @@ const generateRecipeDOM = ({ id, title, updatedAt }) => {
 
   // setup timestampEl textConten
   timestampEl.textContent = generateLastEdited(updatedAt);
-  statusEl.textContent = generateIngredientSummary();
-  // console.log(generateIngredientSummary())
+  // statusEl.textContent = generateIngredientSummary();
 
   // append elements in order
   labelEl.appendChild(statusEl);

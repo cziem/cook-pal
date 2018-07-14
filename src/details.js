@@ -1,6 +1,6 @@
 import { removeRecipe, updateRecipe } from "./recipes";
 import { initEditPage, generateLastEdited } from "./views";
-import { createIngredient, loadIngredients, renderIngredients } from './ingredients'
+import { renderIngredients } from "./ingredients";
 
 const recipeId = location.hash.substring(1);
 const titleEl = document.querySelector("#recipeTitle");
@@ -8,7 +8,7 @@ const bodyEl = document.querySelector("#recipe_body");
 const removeEl = document.querySelector("#deleteRecipe");
 const dateEl = document.querySelector("#last_edited");
 
-renderIngredients()
+renderIngredients();
 initEditPage(recipeId);
 
 titleEl.addEventListener("input", e => {
@@ -36,15 +36,17 @@ document.querySelector("#add_ingredient").addEventListener("submit", e => {
   const ingredient = e.target.elements.addIngredient.value.trim();
 
   if (ingredient.length > 0) {
-    createIngredient(ingredient);
-    renderIngredients()
+    updateRecipe(recipeId, {
+      ingredients : ingredient
+    });
+    dateEl.textContent = generateLastEdited(ingredient.updatedAt);
+    renderIngredients();
     e.target.elements.addIngredient.value = "";
   }
 });
 
 window.addEventListener("storage", e => {
   if (e.key === "recipes") {
-    loadIngredients()
     initEditPage(recipeId);
     renderIngredients()
   }

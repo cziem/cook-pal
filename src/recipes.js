@@ -32,7 +32,9 @@ const createRecipe = () => {
     title: "",
     body: "",
     createdAt: timestamp,
-    updatedAt: timestamp
+    updatedAt: timestamp,
+    ingredients: [],
+    hasIngredients: false
   })
 
   saveRecipe()
@@ -79,7 +81,7 @@ const sortRecipes = sortBy => {
 }
 
 // update recipes
-const updateRecipe = (id, { title, body }) => {
+const updateRecipe = (id, { title, body, ingredients, hasIngredients }) => {
   const recipe = recipes.find(recipe => recipe.id === id)
 
   if (!recipe) return
@@ -92,6 +94,16 @@ const updateRecipe = (id, { title, body }) => {
   if (typeof body === "string") {
     recipe.body = body
     recipe.updatedAt = moment().valueOf()
+  }
+
+  if (typeof ingredients === 'string') {
+    recipe.ingredients.push(ingredients)
+    recipe.updatedAt = moment().valueOf()
+    console.log(recipes)
+  }
+
+  if (typeof hasIngredients === 'boolean') {
+    // do something
   }
 
   saveRecipe()
@@ -111,4 +123,4 @@ const removeRecipe = id => {
 
 recipes = loadRecipes()
 
-export { getRecipes, createRecipe, sortRecipes, updateRecipe, removeRecipe }
+export { getRecipes, createRecipe, sortRecipes, updateRecipe, removeRecipe, saveRecipe }
