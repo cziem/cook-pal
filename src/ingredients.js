@@ -16,7 +16,7 @@ const renderIngredients = () => {
     ingredientEl.appendChild(noIngredient);
   } else {
     ingredientItems.forEach(ingredientItem => {
-      ingredientEl.appendChild(generateIngredientDOM(ingredientItem));
+      ingredientEl.appendChild(generateIngredientDOM(ingredientItem.ingredients));
     });
   }
 };
