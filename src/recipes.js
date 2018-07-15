@@ -33,8 +33,7 @@ const createRecipe = () => {
     body: "",
     createdAt: timestamp,
     updatedAt: timestamp,
-    ingredients: [],
-    hasIngredients: false
+    ingredients: []
   })
 
   saveRecipe()
@@ -97,7 +96,10 @@ const updateRecipe = (id, { title, body, ingredients, hasIngredients }) => {
   }
 
   if (typeof ingredients === 'string') {
-    recipe.ingredients.push(ingredients)
+    recipe.ingredients.push({
+      ingredients: ingredients,
+      hasIngredients: false
+    })
     recipe.updatedAt = moment().valueOf()
     console.log(recipes)
   }
