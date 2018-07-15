@@ -67,7 +67,7 @@ const removeIngredient = item => {
   const ingredientRecipe = ingredientObject.ingredients
 
   const ingredientIndex = ingredientRecipe.findIndex(
-    ingredient => ingredient.includes(item)
+    ingredient => ingredient.ingredients.includes(item)
   );
 
   if (ingredientIndex > -1) {
