@@ -5,7 +5,7 @@ import { renderIngredients } from "./ingredients";
 const recipeId = location.hash.substring(1);
 const titleEl = document.querySelector("#recipeTitle");
 const bodyEl = document.querySelector("#recipe_body");
-const removeEl = document.querySelector("#deleteRecipe");
+const deleteEl = document.querySelector("#deleteRecipe");
 const dateEl = document.querySelector("#last_edited");
 
 renderIngredients();
@@ -25,7 +25,7 @@ bodyEl.addEventListener("input", e => {
   dateEl.textContent = generateLastEdited(recipe.updatedAt);
 });
 
-removeEl.addEventListener("click", () => {
+deleteEl.addEventListener("click", () => {
   removeRecipe(recipeId);
   location.assign("/index.html");
 });

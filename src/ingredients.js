@@ -11,15 +11,15 @@ const renderIngredients = () => {
   ingredientEl.innerHTML = "";
 
   // check for content in the ingredients array
-  if (ingredientItems.length === 0) {
+  if (ingredientItems.length > 0) {
+    ingredientItems.forEach(ingredientItem => {
+      ingredientEl.appendChild(generateIngredientDOM(ingredientItem));
+    });
+  } else {
     const noIngredient = document.createElement("p");
     noIngredient.classList.add("empty-message");
     noIngredient.textContent = "You have no ingredients";
     ingredientEl.appendChild(noIngredient);
-  } else {
-    ingredientItems.forEach(ingredientItem => {
-      ingredientEl.appendChild(generateIngredientDOM(ingredientItem));
-    });
   }
 };
 
