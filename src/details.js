@@ -37,7 +37,7 @@ document.querySelector("#add_ingredient").addEventListener("submit", e => {
 
   if (ingredient.length > 0) {
     updateRecipe(recipeId, {
-      ingredients : ingredient
+      ingredients: ingredient
     });
     dateEl.textContent = generateLastEdited(ingredient.updatedAt);
     renderIngredients();

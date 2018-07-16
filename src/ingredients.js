@@ -1,10 +1,12 @@
-import { getRecipes, saveRecipe } from "./recipes";
+import { getRecipes, saveRecipe, updateRecipe } from "./recipes";
+
+const recipeId = location.hash.substring(1);
 
 // renderIngredients
 const renderIngredients = () => {
   const ingredientEl = document.querySelector("#ingredients");
-  const [ingredientObject] = getRecipes()
-  const ingredientItems = ingredientObject.ingredients
+  const [ingredientObject] = getRecipes();
+  const ingredientItems = ingredientObject.ingredients;
 
   ingredientEl.innerHTML = "";
 
@@ -16,7 +18,7 @@ const renderIngredients = () => {
     ingredientEl.appendChild(noIngredient);
   } else {
     ingredientItems.forEach(ingredientItem => {
-      ingredientEl.appendChild(generateIngredientDOM(ingredientItem.ingredients));
+      ingredientEl.appendChild(generateIngredientDOM(ingredientItem));
     });
   }
 };
@@ -36,9 +38,9 @@ const generateIngredientDOM = ingredient => {
   removeButton.classList.add("button", "button--text");
 
   // setup contents and state
-  textEl.textContent = ingredient;
+  textEl.textContent = ingredient.ingredients;
   removeButton.textContent = "remove";
-  checkbox.checked = ingredient.hasIngredient;
+  checkbox.checked = ingredient.hasIngredients;
 
   // couple the ingredient DOM
   containerEl.appendChild(checkbox);
@@ -48,12 +50,13 @@ const generateIngredientDOM = ingredient => {
 
   // setup listener & handlers
   checkbox.addEventListener("change", () => {
-    toggleIngredient(ingredient.id);
+    toggleIngredient(ingredient.ingredientId);
+    // saveRecipe()
     renderIngredients();
   });
 
-  removeButton.addEventListener("click", (e) => {
-    const item = e.target.parentElement.children[0].textContent
+  removeButton.addEventListener("click", e => {
+    const item = e.target.parentElement.children[0].textContent;
     removeIngredient(item);
     renderIngredients();
   });
@@ -63,47 +66,53 @@ const generateIngredientDOM = ingredient => {
 
 // // setup removeIngredient
 const removeIngredient = item => {
-  const [ingredientObject] = getRecipes()
-  const ingredientRecipe = ingredientObject.ingredients
+  const [ingredientObject] = getRecipes();
+  const ingredientRecipe = ingredientObject.ingredients;
 
-  const ingredientIndex = ingredientRecipe.findIndex(
-    ingredient => ingredient.ingredients.includes(item)
+  const ingredientIndex = ingredientRecipe.findIndex(ingredient =>
+    ingredient.ingredients.includes(item)
   );
 
   if (ingredientIndex > -1) {
     ingredientRecipe.splice(ingredientIndex, 1);
-    saveRecipe()
+    saveRecipe();
   }
 };
 
 // // toggleIngredient
 const toggleIngredient = id => {
-  const [ingredientObject] = getRecipes()
-  const ingredientRecipe = ingredientObject.ingredients
-  const ingredient = ingredientRecipe.find(ingredient => ingredient.id === id);
+  const [ingredientObject] = getRecipes();
+  const ingredientRecipe = ingredientObject.ingredients;
+  const ingredient = ingredientRecipe.find(
+    ingredient => ingredient.ingredientId === id
+  );
 
   if (ingredient) {
-    ingredient.hasIngredient = !ingredient.hasIngredient;
-    saveRecipe()
+    ingredient.hasIngredients = !ingredient.hasIngredients;
+    updateRecipe(recipeId, {
+      hasIngredients: !ingredient.hasIngredients
+    });
+    saveRecipe();
   }
 };
 
 // // Generate ingredient summary
-// const generateIngredientSummary = () => {
-//   const totalLength = ingredients.length;
-//   const absentIngredients = ingredients.filter(
-//     ingredient => ingredient.hasIngredient
-//   );
-//   const absentIngredientsLength = absentIngredients.length;
+const generateIngredientSummary = () => {
+  const [ingredientObject] = getRecipes();
+  const ingredientRecipe = ingredientObject.ingredients;
+  const totalLength = ingredientRecipe.length;
+  const absentIngredients = ingredientRecipe.filter(
+    ingredient => ingredient.hasIngredients
+  );
+  const absentIngredientsLength = absentIngredients.length;
 
-//   if (totalLength === absentIngredientsLength) {
-//     return "You have all the ingredients";
-//   } else if (absentIngredientsLength > 0) {
-//     return "You have some of the ingredients";
-//   } else if (absentIngredientsLength === 0) {
-//     return "You have none of the ingredients";
-//   }
-// };
+  if (totalLength === absentIngredientsLength) {
+    return "You have all the ingredients";
+  } else if (absentIngredientsLength > 0) {
+    return "You have some of the ingredients";
+  } else if (absentIngredientsLength === 0) {
+    return "You have none of the ingredients";
+  }
+};
 
-
-export { renderIngredients }
+export { renderIngredients, generateIngredientSummary };

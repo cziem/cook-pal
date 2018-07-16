@@ -80,7 +80,7 @@ const sortRecipes = sortBy => {
 }
 
 // update recipes
-const updateRecipe = (id, { title, body, ingredients, hasIngredients }) => {
+const updateRecipe = (id, { title, body, ingredients }) => {
   const recipe = recipes.find(recipe => recipe.id === id)
 
   if (!recipe) return
@@ -98,14 +98,10 @@ const updateRecipe = (id, { title, body, ingredients, hasIngredients }) => {
   if (typeof ingredients === 'string') {
     recipe.ingredients.push({
       ingredients: ingredients,
-      hasIngredients: false
+      hasIngredients: false,
+      ingredientId: uuidv4()
     })
     recipe.updatedAt = moment().valueOf()
-    console.log(recipes)
-  }
-
-  if (typeof hasIngredients === 'boolean') {
-    // do something
   }
 
   saveRecipe()
